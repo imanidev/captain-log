@@ -7,7 +7,6 @@ const methodOverride = require("method-override");
 const app = express();
 const port = 3000;
 
-
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -16,8 +15,6 @@ mongoose.connect(process.env.MONGO_URI, {
 mongoose.connection.once("open", () => {
   console.log("connected to mongo");
 });
-
-
 
 //Middleware
 app.engine("jsx", require("jsx-view-engine").createEngine());
@@ -29,10 +26,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-
-
 //Data
 const Log = require("./models/logs");
 
@@ -43,20 +36,18 @@ const Log = require("./models/logs");
 app.get("/logs", async (req, res) => {
   try {
     const allLogs = await Log.find({});
-    console.log(allLogs);
-    res.render("Index", {log: allLogs});
+    // console.log(allLogs);
+    res.render("Index", { log: allLogs });
   } catch (error) {
     console.error(error);
   }
 });
-
 
 // New : An empty form for a new thing - GET /fruits/new
 
 app.get("/logs/new", (req, res) => {
   res.render("New");
 });
-
 
 // Delete : Get rid of this particular thing! - DELETE /fruits/:id
 
@@ -69,7 +60,6 @@ app.delete("/logs/:id", async (req, res) => {
     console.error(error);
   }
 });
-
 
 // Update : Update this specific thing with this updated form - PUT /fruits/:id
 
@@ -134,7 +124,6 @@ app.get("/logs/:id", async (req, res) => {
     console.error(error);
   }
 });
-
 
 //Listen
 app.listen(port, () => {
