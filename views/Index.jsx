@@ -1,16 +1,14 @@
 const React = require("react");
 
-class Show extends React.Component {
+class Index extends React.Component {
   render() {
-    const { title, entry, shipIsBroken } = this.props.log;
+    const { log } = this.props;
+    console.log(log)
     return (
       <div>
-        <h1>{title}</h1>
-        <h2>{entry}</h2>
-        <h3>{shipIsBroken}</h3>
-        <a href={`/logs/${this.props.log._id}/edit`}>Edit</a>
+        <a href={`/logs/${log._id}/edit`}>Edit</a>
         <form
-          action={`/logs/${this.props.log._id}?_method=DELETE`}
+          action={`/logs/${log._id}?_method=DELETE`}
           method="POST"
         >
           <input type="submit" value="DELETE" />
@@ -20,4 +18,4 @@ class Show extends React.Component {
   }
 }
 
-module.exports = Show;
+module.exports = Index;

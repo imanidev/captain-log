@@ -1,12 +1,13 @@
 require("dotenv").config();
 
 const express = require("express");
+const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
 const app = express();
 const port = 3000;
 
-const mongoose = require("mongoose");
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -16,11 +17,13 @@ mongoose.connection.once("open", () => {
   console.log("connected to mongo");
 });
 
+
+
 //Middleware
 app.engine("jsx", require("jsx-view-engine").createEngine());
 app.set("view engine", "jsx");
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
   next();
@@ -31,7 +34,7 @@ app.use((req, res, next) => {
 
 
 //Data
-const Log = require("./models/Log");
+const Log = require("./models/logs");
 
 //Routes (INDUCES)
 
@@ -41,9 +44,7 @@ app.get("/logs", async (req, res) => {
   try {
     const allLogs = await Log.find({});
     console.log(allLogs);
-    res.render("Index", {
-      logs: allLogs,
-    });
+    res.render("Index", {log: allLogs});
   } catch (error) {
     console.error(error);
   }
@@ -139,27 +140,3 @@ app.get("/logs/:id", async (req, res) => {
 app.listen(port, () => {
   console.log(`listening at port:${port}`);
 });
-
-
-// Add dotenv
-// Imports or Dependencies
-// Mongoose info
-// Middleware
-// Data
-// Routes...
-// Listen
-
-
-//setup
-
-// touch server.js
-
-// npm init -y
-
-// npm i express
-
-// npm install jsx-view-engine react react-dom dotenv --save
-
-// npm i -g nodemon (one time install)
-
-// npm i mongoose@6.11.1
