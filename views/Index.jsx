@@ -1,41 +1,3 @@
-// const React = require("react");
-
-// class Index extends React.Component {
-//   render() {
-//     const { log } = this.props;
-//     // console.log(log);
-//     return (
-//       <div>
-//         <ul>
-//           {log.map((logEntry) => {
-//             return (
-//               <li>
-//                 <h2>{logEntry.title}</h2>
-//                 <p>{logEntry.entry}</p>
-//                 <p>
-//                   {logEntry.shipIsBroken
-//                     ? "Ship is broken"
-//                     : "Ship is not broken"}
-//                 </p>
-//                 <p>{logEntry.timestamps}</p>
-//               </li>
-//             );
-//           })}
-//         </ul>
-//         <button>
-//           {" "}
-//           <a href={`/logs/${log._id}/edit`}>Edit</a>
-//         </button>
-//         <form action={`/logs/${log._id}?_method=DELETE`} method="POST">
-//           <input type="submit" value="DELETE" />
-//         </form>
-//       </div>
-//     );
-//   }
-// }
-
-// module.exports = Index;
-
 const React = require("react");
 
 class Index extends React.Component {
@@ -49,12 +11,19 @@ class Index extends React.Component {
               <li>
                 <h2>{logEntry.title}</h2>
                 <p>{logEntry.entry}</p>
+
                 <p>
-                   {logEntry.shipIsBroken
-                    ? "Ship is broken"
-                    : "Ship is not broken"}
+                  <b>Created:</b>{" "}
+                  {new Date(logEntry.createdAt).toLocaleString()}
                 </p>
-                <p>{logEntry.timestamps}</p>
+                <p>
+                  <b>Last Updated:</b>{" "}
+                  {new Date(logEntry.updatedAt).toLocaleString()}
+                </p>
+                <p>
+                  <b>Ship status:</b>{" "}
+                  {logEntry.shipIsBroken ? "Broken" : "Not broken"}
+                </p>
                 <button>
                   <a href={`/logs/${logEntry._id}/edit`}>Edit</a>
                 </button>
@@ -68,6 +37,9 @@ class Index extends React.Component {
             );
           })}
         </ul>
+        <button>
+          <a href="/logs/new">Create New Log</a>
+        </button>
       </div>
     );
   }
